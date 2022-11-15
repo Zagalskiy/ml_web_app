@@ -1,2 +1,2 @@
-# ml_web_app
-Learning ML Web App
+# Web-приложение на основе библиотеки Streamlit
+Нужно выбрать модель Streamlit или другую!
