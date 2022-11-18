@@ -117,9 +117,9 @@ def update_query_params():
 
 
 with row1_1:
-    st.title("NYC Uber Ridesharing Data")
+    st.title("Данные райдшеринга Uber в Нью-Йорке")
     hour_selected = st.slider(
-        "Select hour of pickup", 0, 23, key="pickup_hour", on_change=update_query_params
+        "Выберите час подачи", 0, 23, key="pickup_hour", on_change=update_query_params
     )
 
 
@@ -127,8 +127,8 @@ with row1_2:
     st.write(
         """
     ##
-    Examining how Uber pickups vary over time in New York City's and at its major regional airports.
-    By sliding the slider on the left you can view different slices of time and explore different transportation trends.
+    Изучение того, как с течением времени меняются подача машин Uber в Нью-Йорке и в его крупных аэропортах.
+    Перемещая ползунок слева, можно просматривать разные интервалы времени и изучать различные тенденции в развитии транспорта.
     """
     )
 
@@ -144,20 +144,20 @@ midpoint = mpoint(data["lat"], data["lon"])
 
 with row2_1:
     st.write(
-        f"""**All New York City from {hour_selected}:00 and {(hour_selected + 1) % 24}:00**"""
+        f"""**Весь Нью-Йорк от {hour_selected}:00 и {(hour_selected + 1) % 24}:00**"""
     )
     map(filterdata(data, hour_selected), midpoint[0], midpoint[1], 11)
 
 with row2_2:
-    st.write("**La Guardia Airport**")
+    st.write("**Аэропорт La Guardia**")
     map(filterdata(data, hour_selected), la_guardia[0], la_guardia[1], zoom_level)
 
 with row2_3:
-    st.write("**JFK Airport**")
+    st.write("**Аэропорт JFK**")
     map(filterdata(data, hour_selected), jfk[0], jfk[1], zoom_level)
 
 with row2_4:
-    st.write("**Newark Airport**")
+    st.write("**Аэропорт Newark**")
     map(filterdata(data, hour_selected), newark[0], newark[1], zoom_level)
 
 # CALCULATING DATA FOR THE HISTOGRAM
@@ -165,7 +165,7 @@ chart_data = histdata(data, hour_selected)
 
 # LAYING OUT THE HISTOGRAM SECTION
 st.write(
-    f"""**Breakdown of rides per minute between {hour_selected}:00 and {(hour_selected + 1) % 24}:00**"""
+    f"""**Перерыв в поездках за минуту между {hour_selected}:00 и {(hour_selected + 1) % 24}:00**"""
 )
 
 st.altair_chart(
@@ -176,7 +176,7 @@ st.altair_chart(
     .encode(
         x=alt.X("minute:Q", scale=alt.Scale(nice=False)),
         y=alt.Y("pickups:Q"),
-        tooltip=["minute", "pickups"],
+        tooltip=["минуты", "подачи"],
     )
     .configure_mark(opacity=0.2, color="red"),
     use_container_width=True,
