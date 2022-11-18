@@ -27,6 +27,7 @@ def load_data():
 
     return data
 # FUNCTION FOR AIRPORT MAPS
+
 def map(data, lat, lon, zoom):
     st.write(
         pdk.Deck(
@@ -51,4 +52,68 @@ def map(data, lat, lon, zoom):
             ],
         )
     )
+# FILTER DATA FOR A SPECIFIC HOUR, CACHE
+@st.experimental_memo
+def filterdata(df, hour_selected):
+    return df[df["date/time"].dt.hour == hour_selected]
 
+
+# CALCULATE MIDPOINT FOR GIVEN SET OF DATA
+@st.experimental_memo
+def mpoint(lat, lon):
+    return (np.average(lat), np.average(lon))
+
+
+# FILTER DATA BY HOUR
+@st.experimental_memo
+def histdata(df, hr):
+    filtered = data[
+        (df["date/time"].dt.hour >= hr) & (df["date/time"].dt.hour < (hr + 1))
+    ]
+
+    hist = np.histogram(filtered["date/time"].dt.minute, bins=60, range=(0, 60))[0]
+
+    return pd.DataFrame({"minute": range(60), "pickups": hist})
+
+
+# STREAMLIT APP LAYOUT
+data = load_data()
+
+# LAYING OUT THE TOP SECTION OF THE APP
+row1_1, row1_2 = st.columns((2, 3))
+
+# SEE IF THERE'S A QUERY PARAM IN THE URL (e.g. ?pickup_hour=2)
+# THIS ALLOWS YOU TO PASS A STATEFUL URL TO SOMEONE WITH A SPECIFIC HOUR SELECTED,
+# E.G. https://share.streamlit.io/streamlit/demo-uber-nyc-pickups/main?pickup_hour=2
+if not st.session_state.get("url_synced", False):
+    try:
+        pickup_hour = int(st.experimental_get_query_params()["pickup_hour"][0])
+        st.session_state["pickup_hour"] = pickup_hour
+        st.session_state["url_synced"] = True
+    except KeyError:
+        pass
+
+# IF THE SLIDER CHANGES, UPDATE THE QUERY PARAM
+def update_query_params():
+    hour_selected = st.session_state["pickup_hour"]
+    st.experimental_set_query_params(pickup_hour=hour_selected)
+
+
+with row1_1:
+    st.title("NYC Uber Ridesharing Data")
+    hour_selected = st.slider(
+        "Select hour of pickup", 0, 23, key="pickup_hour", on_change=update_query_params
+    )
+
+
+with row1_2:
+    st.write(
+        """
+    ##
+    Examining how Uber pickups vary over time in New York City's and at its major regional airports.
+    By sliding the slider on the left you can view different slices of time and explore different transportation trends.
+    """
+    )
+
+# LAYING OUT THE MIDDLE SECTION OF THE APP WITH THE MAPS
+row2_1, row2_2, row2_3, row2_4 = st.columns((2, 1, 1, 1))
