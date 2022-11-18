@@ -22,7 +22,7 @@ import pydeck as pdk
 import streamlit as st
 
 # SETTING PAGE CONFIG TO WIDE MODE AND ADDING A TITLE AND FAVICON
-st.set_page_config(layout="wide", page_title="NYC Ridesharing Demo", page_icon=":taxi:")
+st.set_page_config(layout="wide", page_title="Демо райдшеринга в Нью-Йорке", page_icon=":taxi:")
 
 # LOAD DATA ONCE
 @st.experimental_singleton
