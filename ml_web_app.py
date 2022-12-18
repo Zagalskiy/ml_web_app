@@ -25,10 +25,9 @@ def load_data():
         "date/time"
         ],  # set as datetime instead of converting after the fact
     )
-
     return data
-# FUNCTION FOR AIRPORT MAPS
 
+# FUNCTION FOR AIRPORT MAPS
 def map(data, lat, lon, zoom):
     st.write(
         pdk.Deck(
@@ -53,17 +52,16 @@ def map(data, lat, lon, zoom):
             ],
         )
     )
+
 # FILTER DATA FOR A SPECIFIC HOUR, CACHE
 @st.experimental_memo
 def filterdata(df, hour_selected):
     return df[df["date/time"].dt.hour == hour_selected]
 
-
 # CALCULATE MIDPOINT FOR GIVEN SET OF DATA
 @st.experimental_memo
 def mpoint(lat, lon):
     return (np.average(lat), np.average(lon))
-
 
 # FILTER DATA BY HOUR
 @st.experimental_memo
@@ -71,9 +69,7 @@ def histdata(df, hr):
     filtered = data[
         (df["date/time"].dt.hour >= hr) & (df["date/time"].dt.hour < (hr + 1))
     ]
-
     hist = np.histogram(filtered["date/time"].dt.minute, bins=60, range=(0, 60))[0]
-
     return pd.DataFrame({"minute": range(60), "pickups": hist})
 
 
@@ -85,7 +81,7 @@ row1_1, row1_2 = st.columns((2, 3))
 
 # SEE IF THERE'S A QUERY PARAM IN THE URL (e.g. ?pickup_hour=2)
 # THIS ALLOWS YOU TO PASS A STATEFUL URL TO SOMEONE WITH A SPECIFIC HOUR SELECTED,
-# E.G. https://share.streamlit.io/streamlit/demo-uber-nyc-pickups/main?pickup_hour=2
+# E.G. https://nyc-uber.streamlit.app/?pickup_hour=2
 if not st.session_state.get("url_synced", False):
     try:
         pickup_hour = int(st.experimental_get_query_params()["pickup_hour"][0])
@@ -99,20 +95,18 @@ def update_query_params():
     hour_selected = st.session_state["pickup_hour"]
     st.experimental_set_query_params(pickup_hour=hour_selected)
 
-
 with row1_1:
     st.title("Данные райдшеринга Uber в Нью-Йорке")
     hour_selected = st.slider(
         "Выберите час подачи", 0, 23, key="pickup_hour", on_change=update_query_params
     )
 
-
 with row1_2:
     st.write(
         """
     ##
-    Изучение того, как с течением времени меняются подача машин Uber в Нью-Йорке и в его крупных аэропортах.
-    Перемещая ползунок слева, можно просматривать разные интервалы времени и изучать различные тенденции в развитии транспорта.
+    Визуализация изменения подачи машин райдшеринга Uber в Нью-Йорке и в его крупных аэропортах с течением времени.
+    Перемещая ползунок слева, можно изучать различные тенденции в развитии транспорта в разные интервалы времени.
     """
     )
 
@@ -128,7 +122,7 @@ midpoint = mpoint(data["lat"], data["lon"])
 
 with row2_1:
     st.write(
-        f"""**Весь Нью-Йорк от {hour_selected}:00 и {(hour_selected + 1) % 24}:00**"""
+        f"""**Весь Нью-Йорк от {hour_selected}:00 до {(hour_selected + 1) % 24}:00**"""
     )
     map(filterdata(data, hour_selected), midpoint[0], midpoint[1], 11)
 
@@ -149,7 +143,7 @@ chart_data = histdata(data, hour_selected)
 
 # LAYING OUT THE HISTOGRAM SECTION
 st.write(
-    f"""**Перерыв в поездках за минуту между {hour_selected}:00 и {(hour_selected + 1) % 24}:00**"""
+    f"""**Подробная поминутная раскладка поездок в период между {hour_selected}:00 и {(hour_selected + 1) % 24}:00**"""
 )
 
 st.altair_chart(
@@ -160,8 +154,8 @@ st.altair_chart(
     .encode(
         x=alt.X("minute:Q", scale=alt.Scale(nice=False)),
         y=alt.Y("pickups:Q"),
-        tooltip=["minute", "pickups"],
+        tooltip=["Минуты", "Подачи авто"],
     )
-    .configure_mark(opacity=0.2, color="red"),
+    .configure_mark(opacity=0.2, color="blue"),
     use_container_width=True,
 )
