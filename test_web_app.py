@@ -1,1 +1,4 @@
-from ml_web_app import app         #импортируем объект app из файла ml_web_app.py в текущем каталоге
+import requests
+def test_url(): # создаём функцию проверки работоспособности Web-приложения
+    r = requests.head('https://nyc-uber.streamlit.app')
+    assert r.status_code == 303 # проверяем статус код перенаправления
