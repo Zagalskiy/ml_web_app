@@ -17,5 +17,7 @@
 ![Райдшеринг Uber](https://github.com/Zagalskiy/ml_web_app/raw/main/uber_demo.png "Райдшеринг Uber")
 
 ## Локальный запуск приложения:
+```
 pip install --upgrade streamlit
 streamlit run https://raw.githubusercontent.com/Zagalskiy/ml_web_app/main/ml_web_app.py
+```
