@@ -19,7 +19,7 @@
 - [test_web_app.py](https://github.com/Zagalskiy/ml_web_app/blob/main/test_web_app.py)- тест проверки работоспособности приложения
 - [uber-raw-data-sep14.csv.gz](https://github.com/Zagalskiy/ml_web_app/blob/main/uber-raw-data-sep14.csv.gz)- датасет с координатами передвижения машин
 - [uber_demo.png](https://github.com/Zagalskiy/ml_web_app/blob/main/uber_demo.png)- картинки для визуализации
-- [workflows](https://github.com/Zagalskiy/ml_web_app/tree/main/.github/workflows)- файл автоматизированного запуска тестов Continuous Integration
+- [workflows/python-app.yml](https://github.com/Zagalskiy/ml_web_app/tree/main/.github/workflows)- файл автоматизированного запуска тестов Continuous Integration
 
 
 Тестирует GitHub Actions и проверяет работоспособность Web-приложения.
