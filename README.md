@@ -14,6 +14,8 @@
 
 Репозиторий проекта состоит из следующих файлов:
 - [Readme.md](https://github.com/Zagalskiy/ml_web_app/blob/main/README.md) - описание проекта
+- [install.sh](https://github.com/Zagalskiy/ml_web_app/blob/main/install.sh) - скрипт установки и запуска на виртуальной машине
+- [launch.sh](https://github.com/Zagalskiy/ml_web_app/blob/main/launch.sh) - скрипт повторного запуска на виртуальной машине (в случае прерывания работы)
 - [ml_web_app.py](https://github.com/Zagalskiy/ml_web_app/blob/main/ml_web_app.py) - код модели машинного обучения
 - [requirements.txt](https://github.com/Zagalskiy/ml_web_app/blob/main/requirements.txt) - список библиотек для установки
 - [test_web_app.py](https://github.com/Zagalskiy/ml_web_app/blob/main/test_web_app.py) - тест проверки работоспособности приложения
