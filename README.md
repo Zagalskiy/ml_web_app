@@ -33,3 +33,4 @@ streamlit run https://raw.githubusercontent.com/Zagalskiy/ml_web_app/main/ml_web
 * Мурейко Е.С.
 * Санникова Ю.И.
 * Майнгерт В.А.
+* Аванесян Т.Г.
