@@ -154,7 +154,7 @@ st.altair_chart(
     .encode(
         x=alt.X("minute:Q", scale=alt.Scale(nice=False)),
         y=alt.Y("pickups:Q"),
-        tooltip=["minute", "pickups"],
+        tooltip=["**минуты**", "**машины**"],
     )
     .configure_mark(opacity=0.2, color="green"),
     use_container_width=True,
