@@ -16,6 +16,7 @@
 - Streamlit (Фреймворк для развёртывания моделей машинного обучения в Web-приложениях)
 
 Репозиторий проекта состоит из следующих файлов:
+- [Las_Teteras_Desesperadas.jpg](https://github.com/Zagalskiy/ml_web_app/blob/main/Las_Teteras_Desesperadas.jpg) - логотип команды
 - [Readme.md](https://github.com/Zagalskiy/ml_web_app/blob/main/README.md) - описание проекта
 - [install.sh](https://github.com/Zagalskiy/ml_web_app/blob/main/install.sh) - скрипт установки и запуска на виртуальной машине
 - [launch.sh](https://github.com/Zagalskiy/ml_web_app/blob/main/launch.sh) - скрипт повторного запуска на виртуальной машине (в случае прерывания работы)
