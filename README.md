@@ -2,7 +2,7 @@
 [![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://nyc-uber.streamlit.app/)
 
 
-![Las Teteras Desesperadas]<img src="https://github.com/Zagalskiy/ml_web_app/blob/main/Las_Teteras_Desesperadas.jpg" width="300" height="300">
+<img src="https://github.com/Zagalskiy/ml_web_app/blob/main/Las_Teteras_Desesperadas.jpg" width="300" height="300" alt="Las Teteras Desesperadas">
 # Web-приложение на основе библиотеки Streamlit: райдшеринг Uber в Нью-Йорке
 
 Демонстрационное Web-приложение [Streamlit](https://streamlit.io) [написанное на чистом Пайтоне](https://github.com/Zagalskiy/ml_web_app/blob/main/ml_web_app.py) для интерактивной визуализации подачи машин райдшеринга Uber в Нью-Йорке и в его крупных аэропортах с течением времени.
