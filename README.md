@@ -30,6 +30,10 @@
 pip install --upgrade streamlit
 streamlit run https://raw.githubusercontent.com/Zagalskiy/ml_web_app/main/ml_web_app.py
 ```
+## Развернутое приложение на ВМ:
+```
+http://158.160.49.69:8501
+```
 Над созданием проекта работали:
 * Загальский И.К.
 * Мурейко Е.С.
