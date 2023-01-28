@@ -8,9 +8,9 @@ sudo apt install python-is-python3
 echo 'Создаем каталог для виртуальных окружений'
 mkdir ../python_venv
 echo 'Создаем виртуальное окружение'
-python -m venv /home/gigabyte727/python_venv/streamlit
+python -m venv ../python_venv/streamlit
 echo 'Запуск виртуального окружения'
-source /home/gigabyte727/python_venv/streamlit/bin/activate
+source ../python_venv/streamlit/bin/activate
 echo 'Установка библиотек из requirements'
 sudo apt install pip
 pip install -r requirements.txt
