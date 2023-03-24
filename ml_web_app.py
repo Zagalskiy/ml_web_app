@@ -29,7 +29,7 @@ def load_data():                   # предназначенная для из�
     return data
 
 # Задание функции для определения областей на карте
-def map(data, lat, lon, zoom):
+  def map(data, lat, lon, zoom):
     st.write(
         pdk.Deck(
             map_style="mapbox://styles/mapbox/light-v9",
