@@ -96,6 +96,7 @@ def update_query_params():  # Обновление параметра запро
     hour_selected = st.session_state["pickup_hour"]
     st.experimental_set_query_params(pickup_hour=hour_selected)
 
+    
 with row1_1:
     st.title("Данные райдшеринга Uber в Нью-Йорке")
     hour_selected = st.slider(
