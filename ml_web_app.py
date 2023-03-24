@@ -91,8 +91,8 @@ if not st.session_state.get("url_synced", False):
     except KeyError:
         pass
 
-# Обновление параметра запроса при изменении положения ползунка
-def update_query_params():
+
+def update_query_params():  # Обновление параметра запроса при изменении положения ползунка
     hour_selected = st.session_state["pickup_hour"]
     st.experimental_set_query_params(pickup_hour=hour_selected)
 
