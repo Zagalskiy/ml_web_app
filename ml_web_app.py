@@ -125,7 +125,7 @@ newark = [40.7090, -74.1805]
 zoom_level = 12
 midpoint = mpoint(data["lat"], data["lon"])
 
-with row2_1 :
+with row2_1:
     st.write(
         f"""**Весь Нью-Йорк от {hour_selected}:00 до {(hour_selected + 1) % 24}:00**"""
     )
