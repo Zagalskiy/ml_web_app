@@ -6,7 +6,7 @@ import streamlit as st  # - фреймворк для развертывания
 
 # Задание широкоформатного режима страницы и указание заголовка
 st.set_page_config(layout="wide", page_title="Демо райдшеринга в Нью-Йорке", 
-                   page_icon=":taxi:")
+                    page_icon=":taxi:")
 
 
 # Загрузка исходных данных
