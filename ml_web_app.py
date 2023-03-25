@@ -1,8 +1,7 @@
-
-import altair as alt    # - для построения линейных графиков
-import numpy as np      # - для математических и числовых операций
-import pandas as pd     # - для обработки и анализа данных
-import pydeck as pdk    # - для создания визулизации данных
+import altair as alt  # - для построения линейных графиков
+import numpy as np  # - для математических и числовых операций
+import pandas as pd  # - для обработки и анализа данных
+import pydeck as pdk  # - для создания визулизации данных
 import streamlit as st  # - веб-фреймворк для развертывания моделей и визуализаций
 
 # Задание широкоформатного режима страницы и указание заголовка
@@ -10,34 +9,34 @@ st.set_page_config(layout="wide", page_title="Демо райдшеринга в
 
 
 # Загрузка исходных данных
-@st.experimental_singleton     # Функция декоратора для хранения одноэлементных объектов
-def load_data():                   # предназначенная для избежания повторного пересчета
+@st.experimental_singleton  # Функция декоратора для хранения одноэлементных объектов
+def load_data():  # предназначенная для избежания повторного пересчета
     data = pd.read_csv(
         "uber-raw-data-sep14.csv.gz",
-        nrows=100000,          # ограничение объема исходных данных 10 %
+        nrows=100000,  # ограничение объема исходных данных 10 %
         names=[
             "date/time",
             "lat",
             "lon",
         ],
-        skiprows=1,  
-        usecols=[0, 1, 2],     # исключаем из таблицы столбец с константой "B02512"
+        skiprows=1,
+        usecols=[0, 1, 2],  # исключаем из таблицы столбец с константой "B02512"
         parse_dates=[
-        "date/time"
+            "date/time"
         ],  # set as datetime instead of converting after the fact
     )
     return data
 
-# Задание функции для определения областей на карте
-  def map(data, lat, lon, zoom):
+
+def map(data, lat, lon, zoom) :  # Задание функции для определения областей на карте.
     st.write(
         pdk.Deck(
             map_style="mapbox://styles/mapbox/light-v9",
             initial_view_state={
-                "latitude": lat,
-                "longitude": lon,
-                "zoom": zoom,
-                "pitch": 50,
+                "latitude" : lat,
+                "longitude" : lon,
+                "zoom" : zoom,
+                "pitch" : 50,
             },
             layers=[
                 pdk.Layer(
@@ -54,24 +53,27 @@ def load_data():                   # предназначенная для из�
         )
     )
 
+
 # Фильтрация данных с часовым интервалом
 @st.experimental_memo
-def filterdata(df, hour_selected):
+def filterdata(df, hour_selected) :
     return df[df["date/time"].dt.hour == hour_selected]
+
 
 # Вычисление средней величины для полученного набора данных
 @st.experimental_memo
-def mpoint(lat, lon):
+def mpoint(lat, lon) :
     return (np.average(lat), np.average(lon))
+
 
 # Фильтрация данных по часам
 @st.experimental_memo
-def histdata(df, hr):
+def histdata(df, hr) :
     filtered = data[
         (df["date/time"].dt.hour >= hr) & (df["date/time"].dt.hour < (hr + 1))
-    ]
+        ]
     hist = np.histogram(filtered["date/time"].dt.minute, bins=60, range=(0, 60))[0]
-    return pd.DataFrame({"minute": range(60), "pickups": hist})
+    return pd.DataFrame({"minute" : range(60), "pickups" : hist})
 
 
 # Макет приложения STREAMLIT
@@ -83,27 +85,27 @@ row1_1, row1_2 = st.columns((2, 3))
 # Проверка на наличие параметра в URL, определяющего время пользователя (например, "?pickup_hour=2")
 # и позволяющего задать его время в приложении, например
 # https://nyc-uber.streamlit.app/?pickup_hour=0
-if not st.session_state.get("url_synced", False):
-    try:
+if not st.session_state.get("url_synced", False) :
+    try :
         pickup_hour = int(st.experimental_get_query_params()["pickup_hour"][0])
         st.session_state["pickup_hour"] = pickup_hour
         st.session_state["url_synced"] = True
-    except KeyError:
+    except KeyError :
         pass
 
 
-def update_query_params():  # Обновление параметра запроса при изменении положения ползунка
+def update_query_params() :  # Обновление параметра запроса при изменении положения ползунка
     hour_selected = st.session_state["pickup_hour"]
     st.experimental_set_query_params(pickup_hour=hour_selected)
 
-    
-with row1_1:
+
+with row1_1 :
     st.title("Данные райдшеринга Uber в Нью-Йорке")
     hour_selected = st.slider(
         "Выберите час подачи", 0, 23, key="pickup_hour", on_change=update_query_params
     )
 
-with row1_2:
+with row1_2 :
     st.write(
         """
     ##
@@ -122,21 +124,21 @@ newark = [40.7090, -74.1805]
 zoom_level = 12
 midpoint = mpoint(data["lat"], data["lon"])
 
-with row2_1:
+with row2_1 :
     st.write(
         f"""**Весь Нью-Йорк от {hour_selected}:00 до {(hour_selected + 1) % 24}:00**"""
     )
     map(filterdata(data, hour_selected), midpoint[0], midpoint[1], 11)
 
-with row2_2:
+with row2_2 :
     st.write("**Аэропорт Ла Гуардиа**")
     map(filterdata(data, hour_selected), la_guardia[0], la_guardia[1], zoom_level)
 
-with row2_3:
+with row2_3 :
     st.write("**Аэропорт им. Джона Кеннеди**")
     map(filterdata(data, hour_selected), jfk[0], jfk[1], zoom_level)
 
-with row2_4:
+with row2_4 :
     st.write("**Аэропорт Ньюарк**")
     map(filterdata(data, hour_selected), newark[0], newark[1], zoom_level)
 
