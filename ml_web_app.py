@@ -139,7 +139,7 @@ with row2_3:
     st.write("**Аэропорт им. Джона Кеннеди**")
     map(filterdata(data, hour_selected), jfk[0], jfk[1], zoom_level)
 
-with row2_4 :
+with row2_4:
     st.write("**Аэропорт Ньюарк**")
     map(filterdata(data, hour_selected), newark[0], newark[1], zoom_level)
 
