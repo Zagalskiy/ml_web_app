@@ -28,15 +28,15 @@ def load_data():  # предназначенная для избежания п�
     return data
 
 
-def map(data, lat, lon, zoom) :  # Задание функции для определения областей на карте.
+def map(data, lat, lon, zoom):  # Задание функции для определения областей на карте.
     st.write(
         pdk.Deck(
             map_style="mapbox://styles/mapbox/light-v9",
             initial_view_state={
-                "latitude" : lat,
-                "longitude" : lon,
-                "zoom" : zoom,
-                "pitch" : 50,
+                "latitude": lat,
+                "longitude": lon,
+                "zoom": zoom,
+                "pitch": 50,
             },
             layers=[
                 pdk.Layer(
@@ -56,24 +56,24 @@ def map(data, lat, lon, zoom) :  # Задание функции для опре
 
 # Фильтрация данных с часовым интервалом
 @st.experimental_memo
-def filterdata(df, hour_selected) :
+def filterdata(df, hour_selected):
     return df[df["date/time"].dt.hour == hour_selected]
 
 
 # Вычисление средней величины для полученного набора данных
 @st.experimental_memo
-def mpoint(lat, lon) :
+def mpoint(lat, lon):
     return (np.average(lat), np.average(lon))
 
 
 # Фильтрация данных по часам
 @st.experimental_memo
-def histdata(df, hr) :
+def histdata(df, hr):
     filtered = data[
         (df["date/time"].dt.hour >= hr) & (df["date/time"].dt.hour < (hr + 1))
         ]
     hist = np.histogram(filtered["date/time"].dt.minute, bins=60, range=(0, 60))[0]
-    return pd.DataFrame({"minute" : range(60), "pickups" : hist})
+    return pd.DataFrame({"minute": range(60), "pickups": hist})
 
 
 # Макет приложения STREAMLIT
@@ -85,27 +85,27 @@ row1_1, row1_2 = st.columns((2, 3))
 # Проверка на наличие параметра в URL, определяющего время пользователя (например, "?pickup_hour=2")
 # и позволяющего задать его время в приложении, например
 # https://nyc-uber.streamlit.app/?pickup_hour=0
-if not st.session_state.get("url_synced", False) :
-    try :
+if not st.session_state.get("url_synced", False):
+    try:
         pickup_hour = int(st.experimental_get_query_params()["pickup_hour"][0])
         st.session_state["pickup_hour"] = pickup_hour
         st.session_state["url_synced"] = True
-    except KeyError :
+    except KeyError:
         pass
 
 
-def update_query_params() :  # Обновление параметра запроса при изменении положения ползунка
+def update_query_params():  # Обновление параметра запроса при изменении положения ползунка
     hour_selected = st.session_state["pickup_hour"]
     st.experimental_set_query_params(pickup_hour=hour_selected)
 
 
-with row1_1 :
+with row1_1:
     st.title("Данные райдшеринга Uber в Нью-Йорке")
     hour_selected = st.slider(
         "Выберите час подачи", 0, 23, key="pickup_hour", on_change=update_query_params
     )
 
-with row1_2 :
+with row1_2:
     st.write(
         """
     ##
