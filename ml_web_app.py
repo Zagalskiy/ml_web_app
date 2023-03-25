@@ -131,7 +131,7 @@ with row2_1:
     )
     map(filterdata(data, hour_selected), midpoint[0], midpoint[1], 11)
 
-with row2_2 :
+with row2_2:
     st.write("**Аэропорт Ла Гуардиа**")
     map(filterdata(data, hour_selected), la_guardia[0], la_guardia[1], zoom_level)
 
