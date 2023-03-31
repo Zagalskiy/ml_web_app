@@ -1,4 +1,4 @@
-import requests
+import requests # импорт запросов
 
 def test_url():    # создаём функцию проверки работоспособности Web-приложения
     r = requests.head('https://nyc-uber.streamlit.app')
