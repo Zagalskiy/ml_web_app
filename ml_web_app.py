@@ -10,7 +10,7 @@ st.set_page_config(layout="wide", page_title="Демо райдшеринга в
 
 
 # Загрузка исходных данных
-@st.experimental_singleton  # Функция декоратора для хранения одноэлементных объектов
+@st.experimental_singleton   # Функция декоратора для хранения одноэлементных объектов
 def load_data():  # предназначенная для избежания повторного пересчета
     data = pd.read_csv(
         "uber-raw-data-sep14.csv.gz",
