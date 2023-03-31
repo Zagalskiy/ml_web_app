@@ -39,7 +39,6 @@ streamlit run https://raw.githubusercontent.com/Zagalskiy/ml_web_app/main/ml_web
 http://158.160.49.69:8501
 ```
 
-
 Над созданием проекта работали:
 * Загальский И.К.
 * Мурейко Е.С.
