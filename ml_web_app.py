@@ -136,7 +136,7 @@ with row2_2:
     map(filterdata(data, hour_selected), la_guardia[0], la_guardia[1], zoom_level)
 
 with row2_3:
-    st.write("**Аэропорт им. Джона Кеннеди**")
+    st.write("**Аэропорт им. Дж. Кеннеди**")
     map(filterdata(data, hour_selected), jfk[0], jfk[1], zoom_level)
 
 with row2_4:
