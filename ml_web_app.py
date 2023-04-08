@@ -116,12 +116,9 @@ with row1_2:
     )
 
 # Построение среднего уровня визуализации
-row2_1, row2_2, row2_3, row2_4 = st.columns((2, 1, 1, 1))
+row2_1 = st.columns((1))
 
 # Установка местоположения масштабирования для аэропортов
-la_guardia = [40.7900, -73.8700]
-jfk = [40.6650, -73.7821]
-newark = [40.7090, -74.1805]
 zoom_level = 12
 midpoint = mpoint(data["lat"], data["lon"])
 
@@ -131,15 +128,26 @@ with row2_1:
     )
     map(filterdata(data, hour_selected), midpoint[0], midpoint[1], 11)
 
-with row2_2:
+
+# Построение нижнего уровня визуализации
+row3_1, row3_2, row3_3 = st.columns((1, 1, 1))
+
+# Установка местоположения масштабирования для аэропортов
+la_guardia = [40.7900, -73.8700]
+jfk = [40.6650, -73.7821]
+newark = [40.7090, -74.1805]
+zoom_level = 12
+midpoint = mpoint(data["lat"], data["lon"])
+
+with row3_1:
     st.write("**Аэропорт Ла Гуардиа**")
     map(filterdata(data, hour_selected), la_guardia[0], la_guardia[1], zoom_level)
 
-with row2_3:
+with row3_2:
     st.write("**Аэропорт им. Дж. Кеннеди**")
     map(filterdata(data, hour_selected), jfk[0], jfk[1], zoom_level)
 
-with row2_4:
+with row3_3:
     st.write("**Аэропорт Ньюарк**")
     map(filterdata(data, hour_selected), newark[0], newark[1], zoom_level)
 
