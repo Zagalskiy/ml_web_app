@@ -44,7 +44,7 @@ def map(data, lat, lon, zoom):  # Задание функции для опре�
                     "HexagonLayer",
                     data=data,
                     get_position=["lon", "lat"],
-                    radius=51,  #радиус точки подбора
+                    radius=51,  # Задание радиуса точки подбора
                     elevation_scale=4,
                     elevation_range=[0, 1000],
                     pickable=True,
@@ -115,19 +115,15 @@ with row1_2:
     """
     )
 
-# Построение среднего уровня визуализации
-row2_1 = st.columns(1)
-
 # Установка местоположения масштабирования для аэропортов
 zoom_level = 12
 midpoint = mpoint(data["lat"], data["lon"])
 
-with row2_1:
-    st.write(
+# Построение среднего уровня визуализации
+st.write(
         f"""**Весь Нью-Йорк от {hour_selected}:00 до {(hour_selected + 1) % 24}:00**"""
-    )
-    map(filterdata(data, hour_selected), midpoint[0], midpoint[1], 11)
-
+)
+map(filterdata(data, hour_selected), midpoint[0], midpoint[1], 11)
 
 # Построение нижнего уровня визуализации
 row3_1, row3_2, row3_3 = st.columns((1, 1, 1))
