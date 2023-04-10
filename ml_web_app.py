@@ -72,7 +72,7 @@ def mpoint(lat, lon):
 def histdata(df, hr):
     filtered = data[
         (df["date/time"].dt.hour >= hr) & (df["date/time"].dt.hour < (hr + 1))
-        ]
+    ]
     hist = np.histogram(filtered["date/time"].dt.minute, bins=60, range=(0, 60))[0]
     return pd.DataFrame({"minute": range(60), "pickups": hist})
 
