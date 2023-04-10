@@ -32,7 +32,7 @@ def load_data():  # предназначенная для избежания п�
 def map(data, lat, lon, zoom):  # Задание функции для определения областей на карте.
     st.write(
         pdk.Deck(
-            map_style="mapbox://styles/mapbox/light-v9",
+            map_style="mapbox://styles/mapbox/outdoors-v12",
             initial_view_state={
                 "latitude": lat,
                 "longitude": lon,
@@ -155,16 +155,19 @@ st.write(
     f"""**Подробная поминутная раскладка поездок в период между {hour_selected}:00 и {(hour_selected + 1) % 24}:00**"""
 )
 
+
 st.altair_chart(
     alt.Chart(chart_data)
     .mark_area(
-        interpolate="step-after",
+        color="lightblue",
+        interpolate='step-after',
+        line=True
     )
     .encode(
         x=alt.X("minute:Q", scale=alt.Scale(nice=False)),
         y=alt.Y("pickups:Q"),
         tooltip=["minute", "pickups"],
     )
-    .configure_mark(opacity=0.2, color="green"),
+    .configure_mark(opacity=0.3, color="purple"),
     use_container_width=True,
 )
