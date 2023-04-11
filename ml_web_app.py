@@ -32,7 +32,7 @@ def load_data():  # предназначенная для избежания п�
 def map(data, lat, lon, zoom):  # Задание функции для определения областей на карте.
     st.write(
         pdk.Deck(
-            map_style="mapbox://styles/mapbox/outdoors-v12",
+            map_style="mapbox://styles/mapbox/navigation-night-v1",
             initial_view_state={
                 "latitude": lat,
                 "longitude": lon,
