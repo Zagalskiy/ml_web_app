@@ -44,7 +44,7 @@ def map(data, lat, lon, zoom):  # Задание функции для опре�
                     "HexagonLayer",
                     data=data,
                     get_position=["lon", "lat"],
-                    radius=51,  # Задание радиуса точки подбора
+                    radius=54,  # Задание радиуса точки подбора
                     elevation_scale=4,
                     elevation_range=[0, 1000],
                     pickable=True,
