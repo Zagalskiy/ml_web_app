@@ -57,7 +57,7 @@ def map(data, lat, lon, zoom):  # Задание функции для опре�
 
 # Фильтрация данных с часовым интервалом
 @st.experimental_memo
-def filterdata(df, hour_selected):
+def filter_by_data(df, hour_selected):
     return df[df["date/time"].dt.hour == hour_selected]
 
 
@@ -123,7 +123,7 @@ midpoint = mpoint(data["lat"], data["lon"])
 st.write(
         f"""**Весь Нью-Йорк от {hour_selected}:00 до {(hour_selected + 1) % 24}:00**"""
 )
-map(filterdata(data, hour_selected), midpoint[0], midpoint[1], 11)
+map(filter_by_data(data, hour_selected), midpoint[0], midpoint[1], 11)
 
 # Построение нижнего уровня визуализации
 row3_1, row3_2, row3_3 = st.columns((1, 1, 1))
@@ -137,15 +137,15 @@ midpoint = mpoint(data["lat"], data["lon"])
 
 with row3_1:
     st.write("**Аэропорт Ла Гуардиа**")
-    map(filterdata(data, hour_selected), la_guardia[0], la_guardia[1], zoom_level)
+    map(filter_by_data(data, hour_selected), la_guardia[0], la_guardia[1], zoom_level)
 
 with row3_2:
     st.write("**Аэропорт им. Дж. Кеннеди**")
-    map(filterdata(data, hour_selected), jfk[0], jfk[1], zoom_level)
+    map(filter_by_data(data, hour_selected), jfk[0], jfk[1], zoom_level)
 
 with row3_3:
     st.write("**Аэропорт Ньюарк**")
-    map(filterdata(data, hour_selected), newark[0], newark[1], zoom_level)
+    map(filter_by_data(data, hour_selected), newark[0], newark[1], zoom_level)
 
 # Расчет данных для гистограммы
 chart_data = histdata(data, hour_selected)
