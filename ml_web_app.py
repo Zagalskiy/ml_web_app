@@ -32,7 +32,7 @@ def load_data():  # предназначенная для избежания п�
 def map(data, lat, lon, zoom):  # Задание функции для определения областей на карте.
     st.write(
         pdk.Deck(
-            map_style="mapbox://styles/mapbox/light-v9",
+            map_style="mapbox://styles/mapbox/outdoors-v12",
             initial_view_state={
                 "latitude": lat,
                 "longitude": lon,
@@ -44,7 +44,7 @@ def map(data, lat, lon, zoom):  # Задание функции для опре�
                     "HexagonLayer",
                     data=data,
                     get_position=["lon", "lat"],
-                    radius=52,  #радиус точки подбора
+                    radius=54,  # Задание радиуса точки подбора
                     elevation_scale=4,
                     elevation_range=[0, 1000],
                     pickable=True,
@@ -57,7 +57,7 @@ def map(data, lat, lon, zoom):  # Задание функции для опре�
 
 # Фильтрация данных с часовым интервалом
 @st.experimental_memo
-def filterdata(df, hour_selected):
+def filter_by_data(df, hour_selected):
     return df[df["date/time"].dt.hour == hour_selected]
 
 
@@ -72,7 +72,7 @@ def mpoint(lat, lon):
 def histdata(df, hr):
     filtered = data[
         (df["date/time"].dt.hour >= hr) & (df["date/time"].dt.hour < (hr + 1))
-        ]
+    ]
     hist = np.histogram(filtered["date/time"].dt.minute, bins=60, range=(0, 60))[0]
     return pd.DataFrame({"minute": range(60), "pickups": hist})
 
@@ -115,8 +115,18 @@ with row1_2:
     """
     )
 
+# Установка местоположения масштабирования для аэропортов
+zoom_level = 12
+midpoint = mpoint(data["lat"], data["lon"])
+
 # Построение среднего уровня визуализации
-row2_1, row2_2, row2_3, row2_4 = st.columns((2, 1, 1, 1))
+st.write(
+        f"""**Весь Нью-Йорк от {hour_selected}:00 до {(hour_selected + 1) % 24}:00**"""
+)
+map(filter_by_data(data, hour_selected), midpoint[0], midpoint[1], 11)
+
+# Построение нижнего уровня визуализации
+row3_1, row3_2, row3_3 = st.columns((1, 1, 1))
 
 # Установка местоположения масштабирования для аэропортов
 la_guardia = [40.7900, -73.8700]
@@ -125,23 +135,17 @@ newark = [40.7090, -74.1805]
 zoom_level = 12
 midpoint = mpoint(data["lat"], data["lon"])
 
-with row2_1:
-    st.write(
-        f"""**Весь Нью-Йорк от {hour_selected}:00 до {(hour_selected + 1) % 24}:00**"""
-    )
-    map(filterdata(data, hour_selected), midpoint[0], midpoint[1], 11)
-
-with row2_2:
+with row3_1:
     st.write("**Аэропорт Ла Гуардиа**")
-    map(filterdata(data, hour_selected), la_guardia[0], la_guardia[1], zoom_level)
+    map(filter_by_data(data, hour_selected), la_guardia[0], la_guardia[1], zoom_level)
 
-with row2_3:
-    st.write("**Аэропорт им. Джона Кеннеди**")
-    map(filterdata(data, hour_selected), jfk[0], jfk[1], zoom_level)
+with row3_2:
+    st.write("**Аэропорт им. Дж. Кеннеди**")
+    map(filter_by_data(data, hour_selected), jfk[0], jfk[1], zoom_level)
 
-with row2_4:
+with row3_3:
     st.write("**Аэропорт Ньюарк**")
-    map(filterdata(data, hour_selected), newark[0], newark[1], zoom_level)
+    map(filter_by_data(data, hour_selected), newark[0], newark[1], zoom_level)
 
 # Расчет данных для гистограммы
 chart_data = histdata(data, hour_selected)
@@ -151,16 +155,19 @@ st.write(
     f"""**Подробная поминутная раскладка поездок в период между {hour_selected}:00 и {(hour_selected + 1) % 24}:00**"""
 )
 
+
 st.altair_chart(
     alt.Chart(chart_data)
     .mark_area(
-        interpolate="step-after",
+        color="lightblue",
+        interpolate='step-after',
+        line=True
     )
     .encode(
         x=alt.X("minute:Q", scale=alt.Scale(nice=False)),
         y=alt.Y("pickups:Q"),
         tooltip=["minute", "pickups"],
     )
-    .configure_mark(opacity=0.2, color="green"),
+    .configure_mark(opacity=0.3, color="purple"),
     use_container_width=True,
 )
